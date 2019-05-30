@@ -7,7 +7,7 @@ Game::Game(sf::RenderWindow& w) {
 
 
 void Game:: Initialize() {
-
+	test = Sprite("GameAssets/DungeonTileset.png", 16, 16, 16, 16);
 }
 
 void Game::Update() {
