@@ -1,4 +1,3 @@
-//#define SFML_DYNAMIC
 
 #include "SFML/Graphics.hpp"
 
@@ -14,11 +13,20 @@ int main()
 		sf::Event event;
 		Game* game = new Game(renderWindow);
 
-		game->Initialize();
+		sf::Texture texture;
+	/*	if (!texture.loadFromFile("GameAssets/DungeonTileset.png")) {
+			std::cout << "Failed to load texture" << std::endl;
+			return 1;
+		}*/
+
+		sf::Sprite sprite;
+		sprite.setTexture(texture);
+
+//		game->Initialize();
 
 		while (renderWindow.pollEvent(event))
 		{
-			game->Update();
+	//		game->Update();
 
 			if (event.type == sf::Event::EventType::Closed)
 			{
@@ -26,8 +34,8 @@ int main()
 			}
 
 			renderWindow.clear(sf::Color::White);
-
-			game->Draw();
+			renderWindow.draw(sprite);
+		//	game->Draw();
 
 			renderWindow.display();
 		}
