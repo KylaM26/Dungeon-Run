@@ -34,10 +34,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\DungeonTileset.png">
+    <Image Include="GameAssets\DungeonTileset.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="GameAssets\DungeonTileset.png">
+    <Image Include="GameAssets\Mario.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Mario.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
