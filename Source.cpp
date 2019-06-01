@@ -1,10 +1,13 @@
 #include "SFML/Graphics.hpp"
 #include "Asset.h"
+#include "Audio.h"
+#include "Game.h"
 
 int main()
 {
 	sf::RenderWindow renderWindow(sf::VideoMode(640, 480), "Dungeon Run");
-
+	SoundEffect death;
+	death.LoadSound("GameAssets/Sounds/PlayerDeath.wav");
 	// Each asset will be loaded for each class.
 	// Example:
 	// The player will have his own asset,
@@ -12,13 +15,16 @@ int main()
 	// So will a level class, (The surroundings and stuff like that.)
 	// I will slice the rest of the sprites when we actually get started on the game.
 	//  The Game class will do everything, this is just a test to see if it works.
-	Asset test;
-	test.CreateAsset("GameAssets/Player.png");
+	//Asset test;
+	//test.CreateAsset("GameAssets/Player.png");
 
 	sf::Event event;
 	renderWindow.setKeyRepeatEnabled(true);
 
-	while (renderWindow.isOpen())
+	Game game = Game(renderWindow);
+
+	game.Initialize(); // Any thing we should initialize should go here or in the game constuctor.
+	while (renderWindow.isOpen()) 
 	{
 
 		while (renderWindow.pollEvent(event))
@@ -29,9 +35,11 @@ int main()
 				renderWindow.close();
 			}
 
+			game.Upadte();
 			//set window to random color to check if working
 			if (event.type == sf::Event::EventType::KeyPressed) {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+					death.Play();
 				}
 				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 				}
@@ -51,11 +59,8 @@ int main()
 			}
 
 			renderWindow.clear();
-			renderWindow.draw(test.GetSprite());
+			game.Draw();
 			renderWindow.display();
 		}
-
-		//delete game;
-		//game = nullptr;
 	}
 }

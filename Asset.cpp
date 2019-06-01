@@ -12,7 +12,7 @@ void Asset::CreateAsset(std::string path) {
 	sprite.setTexture(texture);
 }
 
-const sf::Sprite& Asset::GetSprite() const {
+sf::Sprite& Asset::GetSprite() {
 	return sprite;
 }
 

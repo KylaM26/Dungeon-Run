@@ -10,7 +10,7 @@ class Asset {
 public:
 	Asset();
 	void CreateAsset(std::string path);
-	const sf::Sprite& GetSprite() const;
+	sf::Sprite& GetSprite();
 	~Asset();
 };
 
