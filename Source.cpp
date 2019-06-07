@@ -3,6 +3,8 @@
 #include "Audio.h"
 #include "Game.h"
 
+sf::Font processFont();
+
 int main()
 {
 	sf::RenderWindow renderWindow(sf::VideoMode(640, 480), "Dungeon Run");
@@ -63,4 +65,17 @@ int main()
 			renderWindow.display();
 		}
 	}
+}
+
+sf::Font processFont() 
+{
+	sf::Font font;
+
+	//Load and check the availability of the font file
+	if (!font.loadFromFile("GameAssets/Font/pixelated.ttf"))
+	{
+		std::cout << "can't load font" << "\n";
+	}
+
+	return font;
 }
