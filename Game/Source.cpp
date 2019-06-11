@@ -1,83 +1,91 @@
-#include "SFML/Graphics.hpp"
-#include <iostream>
-#include <math.h>
 
+#include "SFML/Graphics.hpp"
+#include "Asset.h"
+#include "Audio.h"
+#include "Button.h"
+#include "Game.h"
 
 
 
 int main()
 {
-	sf::RenderWindow Window(sf::VideoMode(800, 600, 32), "Platformer");
+	sf::RenderWindow renderWindow(sf::VideoMode(640, 480), "Dungeon Run");
+	SoundEffect death;
+	death.LoadSound("GameAssets/Sounds/PlayerDeath.wav");
+	// Each asset will be loaded for each class.
+	// Example:
+	// The player will have his own asset,
+	// The enemies will have a vector of assets since there will be multiple enemies.
+	// So will a level class, (The surroundings and stuff like that.)
+	// I will slice the rest of the sprites when we actually get started on the game.
+	//  The Game class will do everything, this is just a test to see if it works.
+	//Asset test;
+	//test.CreateAsset("GameAssets/Player.png");
 
-	sf::Texture texture;
-	sf::Sprite sprite;
+	sf::Event event;
+	renderWindow.setKeyRepeatEnabled(true);
 
-	if (!texture.loadFromFile("GameAssets/block.png")) {
-		std::cout << "Yah";
-	}
+	Game game = Game(renderWindow);
+	Button testButton = Button(100, 100, 70, 70, "Test Button", sf::Color::Green, sf::Color::Yellow, sf::Color::Cyan);
 
-	sprite.setTexture(texture);
+	game.Initialize(); // Any thing we should initialize should go here or in the game constuctor.
 
-	auto position = sprite.getPosition();
+	while (renderWindow.isOpen()) 
+	{
+		sf::Vector2f mousePositionInView = renderWindow.mapPixelToCoords(sf::Mouse::getPosition(renderWindow));
 
-	while (Window.isOpen()) {
-		sf::Event event;
+		testButton.Update(mousePositionInView);
+		//if (testButton.IsPressed()) { std::cout << "Pressed" << std::endl; }
 
-		if (Window.pollEvent(event)) {
-			if (event.type == sf::Event::EventType::Closed){
-				Window.close();
+		while (renderWindow.pollEvent(event))
+		{
+
+			if (event.type == sf::Event::EventType::Closed)
+			{
+				renderWindow.close();
 			}
+
+			game.Upadte();
+			
+			//set window to random color to check if working
 			if (event.type == sf::Event::EventType::KeyPressed) {
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) and sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-					position.y += 2;
-					position.x += 2;
-					sprite.setPosition(position);
-				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) and sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-					position.y += 2;
-					position.x -= 2;
-					sprite.setPosition(position);
-				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) and sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-					position.y -= 2;
-					position.x += 2;
-					sprite.setPosition(position);
-				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) and sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-					position.y -= 2;
-					position.x -= 2;
-					sprite.setPosition(position);
-				}
-
-
-
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-					position.y += 4;				
-					sprite.setPosition(position);
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+					death.Play();
 				}
 				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-					position.y -= 4;
-					sprite.setPosition(position);
 				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-					position.x -= 4;
-					sprite.setPosition(position);
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 				}
 				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-					position.x += 4;
-					sprite.setPosition(position);
+				}
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+					renderWindow.close();
 				}
 			}
+			else if (event.type == sf::Event::EventType::MouseButtonPressed) {
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+				}
+				else if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+				}
+			}
+			renderWindow.clear();
+			game.Draw();
+			testButton.Render(renderWindow);
+		//	std::cout << testButton.IsHovering() << std::endl;
 
+			renderWindow.display();
 		}
-
-		Window.clear();
-
-		Window.draw(sprite);
-
-		Window.display();
 	}
-
-	return 0;
 }
 
+sf::Font processFont() {
+	sf::Font font;
+
+	//Load and check the availability of the font file
+	if (!font.loadFromFile("GameAssets/Font/pixelated.ttf"))
+	{
+		std::cout << "can't load font" << "\n";
+	}
+
+	return font;
+}
