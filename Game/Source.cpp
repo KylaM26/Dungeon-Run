@@ -1,62 +1,83 @@
 #include "SFML/Graphics.hpp"
-//#include "Game.h"
+#include <iostream>
+#include <math.h>
+
+
+
 
 int main()
 {
-	sf::RenderWindow renderWindow(sf::VideoMode(640, 480), "Dungeon Run");
+	sf::RenderWindow Window(sf::VideoMode(800, 600, 32), "Platformer");
 
 	sf::Texture texture;
+	sf::Sprite sprite;
 
-	texture.loadFromFile("GameAssets/DungeonTileset.png");
+	if (!texture.loadFromFile("GameAssets/block.png")) {
+		std::cout << "Yah";
+	}
 
-	sf::Sprite sprite(texture);
+	sprite.setTexture(texture);
 
-	sf::Event event;
-	renderWindow.setKeyRepeatEnabled(true);
+	auto position = sprite.getPosition();
 
-	//Game* game = new Game(renderWindow);
+	while (Window.isOpen()) {
+		sf::Event event;
 
-	//game->Initialize();
-
-	while (renderWindow.isOpen())
-	{
-
-		while (renderWindow.pollEvent(event))
-		{
-			//game->Update();
-
-			if (event.type == sf::Event::EventType::Closed)
-			{
-				renderWindow.close();
+		if (Window.pollEvent(event)) {
+			if (event.type == sf::Event::EventType::Closed){
+				Window.close();
 			}
-
-			//set window to random color to check if working
 			if (event.type == sf::Event::EventType::KeyPressed) {
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) and sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+					position.y += 2;
+					position.x += 2;
+					sprite.setPosition(position);
+				}
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) and sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+					position.y += 2;
+					position.x -= 2;
+					sprite.setPosition(position);
+				}
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) and sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+					position.y -= 2;
+					position.x += 2;
+					sprite.setPosition(position);
+				}
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) and sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+					position.y -= 2;
+					position.x -= 2;
+					sprite.setPosition(position);
+				}
+
+
+
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+					position.y += 4;				
+					sprite.setPosition(position);
 				}
 				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+					position.y -= 4;
+					sprite.setPosition(position);
 				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+					position.x -= 4;
+					sprite.setPosition(position);
 				}
 				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-				}
-			}
-			else if (event.type == sf::Event::EventType::MouseButtonPressed) {
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-				}
-				else if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+					position.x += 4;
+					sprite.setPosition(position);
 				}
 			}
 
-			//game->Draw();
-			renderWindow.clear();
-			renderWindow.draw(sprite);
-			renderWindow.display();
 		}
 
-		//delete game;
-		//game = nullptr;
+		Window.clear();
+
+		Window.draw(sprite);
+
+		Window.display();
 	}
+
+	return 0;
 }
+
