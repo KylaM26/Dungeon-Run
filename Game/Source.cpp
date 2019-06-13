@@ -5,7 +5,7 @@
 #include "Button.h"
 #include "Game.h"
 
-
+void MovePlayer(sf::RenderWindow& Window, sf::Event& event, sf::Vector2f& position, sf::Sprite& sprite);
 
 int main()
 {
@@ -21,6 +21,18 @@ int main()
 	//  The Game class will do everything, this is just a test to see if it works.
 	//Asset test;
 	//test.CreateAsset("GameAssets/Player.png");
+	
+	//sprite used to test movement
+	sf::Texture texture;
+	sf::Sprite sprite;
+
+	if (!texture.loadFromFile("GameAssets/block.png")) {
+		std::cout << "Error";
+	}
+
+	sprite.setTexture(texture);
+
+	auto position = sprite.getPosition();
 
 	sf::Event event;
 	renderWindow.setKeyRepeatEnabled(true);
@@ -88,4 +100,54 @@ sf::Font processFont() {
 	}
 
 	return font;
+}
+
+void MovePlayer(sf::RenderWindow& Window,sf::Event& event, sf::Vector2f& position, sf::Sprite& sprite)
+{
+	if (Window.pollEvent(event)) {
+		if (event.type == sf::Event::EventType::Closed) {
+			Window.close();
+		}
+		if (event.type == sf::Event::EventType::KeyPressed) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) and sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+				position.y += 2;
+				position.x += 2;
+				sprite.setPosition(position);
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) and sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+				position.y += 2;
+				position.x -= 2;
+				sprite.setPosition(position);
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) and sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+				position.y -= 2;
+				position.x += 2;
+				sprite.setPosition(position);
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) and sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+				position.y -= 2;
+				position.x -= 2;
+				sprite.setPosition(position);
+			}
+
+
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+				position.y += 4;
+				sprite.setPosition(position);
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+				position.y -= 4;
+				sprite.setPosition(position);
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+				position.x -= 4;
+				sprite.setPosition(position);
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+				position.x += 4;
+				sprite.setPosition(position);
+			}
+		}
+	}
 }
