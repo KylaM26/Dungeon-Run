@@ -1,29 +1,21 @@
 #include "Game.h"
 
-Game::Game(sf::RenderWindow& w) {
-	window = &w;
-	quit = false;
+
+
+Game::Game(sf::RenderWindow& window) {
+	this->window = &window;
+	player = Player("Player");
 }
 
-
-void Game:: Initialize() {
-	test = Sprite("GameAssets/DungeonTileset.png", 16, 16, 16, 16);
+void Game::Initialize() {
+	player.sprite.CreateAsset("GameAssets/Sprites/player.png");
 }
 
-void Game::Update() {
-
+void Game::Upadte() {
 }
 
 void Game::Draw() {
-	window->draw(test.GetSprite());
-}
-
-const bool& Game::GetQuit() const {
-	return quit;
-}
-
-void Game::SetQuit(bool q) {
-	quit = q;
+ 	window->draw(player.sprite.GetSprite()); // Drawing his sprite
 }
 
 Game::~Game() {

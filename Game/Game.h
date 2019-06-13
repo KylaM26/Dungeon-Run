@@ -1,21 +1,20 @@
 #pragma once
-#include "Sprite.h"
+
+#include <SFML/Graphics.hpp>
+
+#include "Player.h"
 
 class Game {
 private:
+	Player player;
 	sf::RenderWindow* window;
-	bool quit;
-	Sprite test;
 public:
-	Game(sf::RenderWindow& w);
+	Game(sf::RenderWindow& window);
 
 	void Initialize();
-	void Update();
+	void Upadte();
 	void Draw();
 
-	void SetQuit(bool q);
-
-	const bool& GetQuit() const;
 	~Game();
 };
 
