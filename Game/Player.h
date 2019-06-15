@@ -7,8 +7,8 @@ class Player
 {
 public:
 	Player();
-	Player(std::string name) 
-		: name(name) 
+	Player(std::string name)
+		: name(name)
 	{
 	}
 
@@ -20,6 +20,7 @@ public:
 	Asset sprite;
 
 	void attack();
+	void MovePlayer(sf::RenderWindow& Window, sf::Event& event, sf::Vector2f& position, sf::Sprite& sprite);
 
 	~Player();
 };
