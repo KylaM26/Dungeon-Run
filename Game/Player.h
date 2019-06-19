@@ -1,15 +1,16 @@
 #pragma once
 #include <string>
-
+#include "Collider.h"
 #include "Asset.h"
 
 class Player
 {
 public:
 	Player();
-	Player(std::string name)
-		: name(name)
+	Player(std::string name) 
+		: name(name) 
 	{
+	
 	}
 
 
@@ -18,10 +19,9 @@ public:
 	double stamina = 100;
 	int level = 1;
 	Asset sprite;
-
 	void attack();
-	void MovePlayer(sf::RenderWindow& Window, sf::Event& event, sf::Vector2f& position, sf::Sprite& sprite);
-
+	void MovePlayer(sf::RenderWindow& Window, sf::Event& event, sf::Vector2f& position, sf::Sprite& sprite, float speed);
+	Asset& GetAsset(); 
 	~Player();
 };
 

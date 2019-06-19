@@ -4,7 +4,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Asset.h"
-
+#include "Collider.h"
 
 enum ButtonState {
 	DEFAULT = 0,
