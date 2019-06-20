@@ -25,6 +25,6 @@ public:
 	//virtual bool PlayerInRange() = 0;
 
 
-	~Enemy();
+	virtual ~Enemy();
 };
 
