@@ -11,8 +11,7 @@ protected:
 
 	States state = Chase;
 	bool mAlive = true;
-	bool collided = false;
-	sf::Sprite player;
+	sf::Sprite* player;
 
 public:
 
@@ -20,9 +19,8 @@ public:
 	virtual void findPlayer() = 0;
 	virtual void draw(sf::RenderWindow& window) = 0;
 	virtual void getStates() = 0;
-	virtual void getPos(sf::Sprite*) = 0;
-	
-	//virtual bool PlayerInRange() = 0;
+	virtual void getPos(sf::Sprite*) = 0;	
+	virtual bool PlayerInRange() = 0;
 
 
 	virtual ~Enemy();

@@ -11,10 +11,10 @@ private:
 	double attackPower;
 	float speed = .1;
 	int range;
+	sf::Sprite entity;
+	sf::CircleShape SearchRadius;
 
 public:
-
-	sf::Sprite entity;
 
 	Monster(sf::Sprite sprite)
 	{
@@ -22,15 +22,17 @@ public:
 	}
 
 	virtual void draw(sf::RenderWindow& window) override{
+		window.draw(SearchRadius); //show the area 
 		window.draw(entity);
 	}
 	virtual void getPos(sf::Sprite* ply) override{
-		player = *ply;
+		player = ply;
 	}
 
 	virtual void getStates() override {
 
 	}
+	virtual bool PlayerInRange();
 
 
 	virtual void findPlayer() override;
