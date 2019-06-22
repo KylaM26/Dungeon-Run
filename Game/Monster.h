@@ -7,12 +7,15 @@
 class Monster : public Enemy
 {
 private:
-	double health;
-	double attackPower;
-	float speed = .1;
-	int range;
-	sf::Sprite entity;
-	sf::CircleShape SearchRadius;
+	sf::Vector2f Playerposition;
+	sf::Vector2f EntityPosition;
+
+	enum States {
+		Patrol, Chase, Attack
+	};
+	enum directions{
+		North, South, East, West
+	};
 
 public:
 
@@ -21,19 +24,32 @@ public:
 		entity = sprite;
 	}
 
+	virtual void patrol() override;
+
+	virtual void attack() override {
+		player->health -= 5;
+		if (!PlayerInRange()){
+			state = Chase;
+		}
+	}
+
 	virtual void draw(sf::RenderWindow& window) override{
+
+		auto pos = entity.getGlobalBounds();
+		auto center = entity.getPosition();
+		SearchRadius.setRadius(pos.height);
+		SearchRadius.setPosition(center.x - 32, center.y - 32); // center image in circle
+
 		window.draw(SearchRadius); //show the area 
 		window.draw(entity);
 	}
-	virtual void getPos(sf::Sprite* ply) override{
+	virtual void getPos(Player* ply) override{
 		player = ply;
 	}
 
-	virtual void getStates() override {
+	virtual void getStates() override;
 
-	}
 	virtual bool PlayerInRange();
-
 
 	virtual void findPlayer() override;
 

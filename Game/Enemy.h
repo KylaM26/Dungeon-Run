@@ -1,26 +1,50 @@
 #pragma once
+#include <random>
+#include <chrono>
 #include "SFML/Graphics.hpp"
+#include "SFML/System/Clock.hpp"
+#include "Player.h"
+
 
 class Enemy
 {
 
 protected:
-	enum States {
-		Search, Chase, Attack
-	};
+	
+	typedef int States;
 
-	States state = Chase;
+	States state = 0;
 	bool mAlive = true;
-	sf::Sprite* player;
+	Player* player;
+	double health;
+	double attackPower;
+	float speed = .1;
+	int range;
+	sf::Sprite entity;
+	sf::CircleShape SearchRadius;
 
 public:
 
-	//virtual void attack() = 0;
-	virtual void findPlayer() = 0;
-	virtual void draw(sf::RenderWindow& window) = 0;
+	void getSpeed(double speed) {
+		this->speed = speed;
+	}
+
+	int RandomNum() {
+		auto seed = std::chrono::system_clock::now().time_since_epoch().count();
+		std::default_random_engine distribution(seed);
+
+		std::uniform_int_distribution <int> random_number(0, 3);
+
+		return random_number(distribution);
+	}
+
 	virtual void getStates() = 0;
-	virtual void getPos(sf::Sprite*) = 0;	
+	virtual void patrol() = 0;
 	virtual bool PlayerInRange() = 0;
+	virtual void findPlayer() = 0;
+	virtual void attack() = 0;
+	virtual void draw(sf::RenderWindow& window) = 0;
+	virtual void getPos(Player*) = 0;	
 
 
 	virtual ~Enemy();
