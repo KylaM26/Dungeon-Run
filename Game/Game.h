@@ -4,14 +4,24 @@
 #include "Asset.h"
 #include "Button.h"
 #include "Player.h"
+#include "MainMenu.h"
+
+enum STATE {
+	MENU = 0,
+	GAMEPLAY
+};
 
 class Game {
 private:
+	STATE currentState;
 	Player player;
 	Asset testAsset;
+
 	sf::RenderWindow* window;
+	sf::Clock deltaClock;
+
 	Button testButton;
-//	std::vector<sf::RectangleShape> rects;
+	sf::Vector2f mousePositionInView;
 public:
 	float deltaTime;
 
