@@ -25,6 +25,13 @@ public:
 	
 	void Render(sf::RenderTarget& target);
 	void Update(const sf::Vector2f mousePos);
+
+	void SetFontWithText(const std::string& text, const sf::Font& font);
+	void SetSizeAndPosition(float x, float y, float width, float height);
+	void SetColors(const sf::Color& defaultColor, const sf::Color& hoverColor, const sf::Color& activeColor);
+	void CenterText();
+
+	const sf::Vector2f& GetSize() const;
 	const bool IsPressed() const;
 	~Button();
 };
