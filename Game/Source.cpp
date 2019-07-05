@@ -4,13 +4,29 @@
 #include "Audio.h"
 #include "Button.h"
 #include "Game.h"
-#include <windows.h>
 
+#include "PositionParser.h"
 
 void MovePlayer(sf::RenderWindow& Window, sf::Event& event, sf::Vector2f& position, sf::Sprite& sprite);
 
 int main() {
-	
+
+	std::vector<sf::Vector2i> pos;
+	pos.push_back(sf::Vector2i(1393, 8594));
+	pos.push_back(sf::Vector2i(3, 4));
+	pos.push_back(sf::Vector2i(44, 948));
+	pos.push_back(sf::Vector2i(93, 43));
+	pos.push_back(sf::Vector2i(84983943, 4332));
+
+	PositionParser::Instance().SaveToFile("Position.txt", pos);
+
+	std::vector<sf::Vector2i> positions = PositionParser::Instance().ReadFile("Position.txt");
+
+	for (int index = 0; index < positions.size(); index++) {
+		std::cout << positions.at(index).x << ", " << positions.at(index).y << std::endl;
+	}
+
+
 	sf::RenderWindow renderWindow(sf::VideoMode(640, 480), "Dungeon Run");
 
 	renderWindow.setKeyRepeatEnabled(true);
@@ -27,6 +43,8 @@ int main() {
 		game.Draw();
 		renderWindow.display();
 	}
+
+
 
 }
 

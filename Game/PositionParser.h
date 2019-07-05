@@ -26,6 +26,24 @@ public:
 		return instance;
 	}
 
+	void SaveToFile(const char* fileName, std::vector<sf::Vector2i>& positions) {
+		std::ofstream file;
+
+		file.open(fileName);
+
+		if (!file.is_open()) {
+			std::cout << "Failed to open file for saving: " << fileName << std::endl;
+			return;
+		}
+
+		for (int index = 0; index < positions.size(); index++) {
+			file << positions.at(index).x << "," << positions.at(index).y << " ";
+		}
+
+		file.close();
+
+	}
+
 	std::vector<sf::Vector2i> ReadFile(const char* fileName) {
 		std::ifstream file;
 
