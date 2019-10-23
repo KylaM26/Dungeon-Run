@@ -47,6 +47,6 @@ public:
 	virtual void getPos(Player*) = 0;	
 
 
-	virtual ~Enemy();
+	virtual ~Enemy() { }
 };
 

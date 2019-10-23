@@ -1,11 +1,5 @@
 #include "GameSaver.h"
 
-
-
-GameSaver::GameSaver()
-{
-}
-
 void GameSaver::SaveGame(const Player& player)
 {
 	std::string path = "Saves/Saves.txt";

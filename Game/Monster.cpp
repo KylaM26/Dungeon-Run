@@ -6,7 +6,7 @@ void Monster::patrol() {
 		Change this to use acceleration
 	*/
 
-	Playerposition = player->sprite.getPosition();
+	Playerposition = player->sprite.GetSprite().getPosition();
 	EntityPosition = entity.getPosition();
 
 	if (PlayerInRange()) {
@@ -33,7 +33,7 @@ void Monster::patrol() {
 
 void Monster::findPlayer() {
 
-	Playerposition = player->sprite.getPosition();
+	Playerposition = player->sprite.GetSprite().getPosition();
 	EntityPosition = entity.getPosition();
 
 	if (Playerposition.x > EntityPosition.x) {
@@ -50,13 +50,13 @@ void Monster::findPlayer() {
 	}
 	entity.setPosition(EntityPosition);
 		
-	if (entity.getGlobalBounds().intersects(player->sprite.getGlobalBounds())) {
+	if (entity.getGlobalBounds().intersects(player->sprite.GetSprite().getGlobalBounds())) {
 		state = Attack;
 	}
 }
 
 bool Monster::PlayerInRange() {
-	return SearchRadius.getGlobalBounds().intersects(player->sprite.getGlobalBounds());
+	return SearchRadius.getGlobalBounds().intersects(player->sprite.GetSprite().getGlobalBounds());
 }
 
 

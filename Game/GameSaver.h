@@ -16,7 +16,7 @@ public:
 	};
 
 	void SaveGame(const Player&);
-	bool overWriteSave(const Player& player);
+	bool overWriteSave(const std::string& path, const Player& player);
 	std::string format(std::string name) {
 		std::string replstr = "";
 		for (auto& letter : name) {
